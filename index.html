@@ -18,7 +18,7 @@
 <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/hero.webp" imagesrcset="assets/img/hero-sm.webp 1000w, assets/img/hero.webp 2400w" imagesizes="100vw">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
-<link rel="stylesheet" href="assets/css/site.css?v=14">
+<link rel="stylesheet" href="assets/css/site.css?v=17">
 </head>
 <body>
 <a class="skip" href="#main">본문 바로가기</a>
@@ -318,16 +318,15 @@
     <div class="sec-bg" aria-hidden="true"><img src="assets/img/ages-bg.webp" srcset="assets/img/ages-bg-sm.webp 1000w, assets/img/ages-bg.webp 1920w" sizes="100vw" width="1920" height="1195" loading="lazy" alt=""></div>
     <div class="wrap">
       <header class="ages-head">
-        <p class="ages-pill">반짝하고 사라지는 브랜드가 아닙니다!</p>
-        <span class="ages-rule" aria-hidden="true"></span>
-        <h2 class="ages-title">다양한 연령층이 즐긴다!</h2>
-        <p class="ages-big"><span>시대를 아우르는 조리법</span><span>다채로운 메뉴구성</span></p>
+        <img class="ages-pill" src="assets/img/ages-pill.webp" width="772" height="92" loading="lazy" alt="반짝하고 사라지는 브랜드가 아닙니다!">
+        <h2 class="ages-title"><img src="assets/img/ages-title.webp" width="689" height="185" loading="lazy" alt="다양한 연령층이 즐긴다!"></h2>
+        <img class="ages-big" src="assets/img/ages-big.webp" width="977" height="238" loading="lazy" alt="시대를 아우르는 조리법, 다채로운 메뉴구성">
       </header>
       <ul class="ages-list">
-        <li><i class="ph ph-cow" aria-hidden="true"></i><span>호불호<br>없는 메뉴</span></li>
-        <li><i class="ph ph-moped" aria-hidden="true"></i><span>배달 / 홀<br>올라운드</span></li>
-        <li><i class="ph ph-cooking-pot" aria-hidden="true"></i><span>트랜디한<br>메뉴 개발</span></li>
-        <li><i class="ph ph-chats-circle" aria-hidden="true"></i><span>본사의<br>적극 지원</span></li>
+        <li><img src="assets/img/ages-card-1.webp" width="306" height="309" loading="lazy" alt="호불호 없는 메뉴"></li>
+        <li><img src="assets/img/ages-card-2.webp" width="307" height="309" loading="lazy" alt="배달 / 홀 올라운드"></li>
+        <li><img src="assets/img/ages-card-3.webp" width="307" height="309" loading="lazy" alt="트랜디한 메뉴 개발"></li>
+        <li><img src="assets/img/ages-card-4.webp" width="307" height="309" loading="lazy" alt="본사의 적극 지원"></li>
       </ul>
     </div>
   </section>
@@ -338,30 +337,38 @@
       <header class="benefit-head">
         <p class="benefit-lead">매장 20호점까지</p>
         <h2 class="benefit-title">가맹비<br>로열티 <em>면제</em></h2>
-        <p class="benefit-note">초도 물품 보증 비용 100만원 (가맹 해지시 반환)</p>
+        <div class="benefit-stamp" aria-hidden="true"><span>FREE</span><b>0원</b><small>가맹비 · 로열티</small></div>
+        <p class="benefit-note"><i class="ph ph-info" aria-hidden="true"></i>초도 물품 보증 비용 100만원 (가맹 해지시 반환)</p>
+        <a class="btn btn-dark" href="#contact">창업 혜택 상담받기</a>
       </header>
       <dl class="fee-list">
         <div class="fee">
+          <i class="ph ph-seal-check" aria-hidden="true"></i>
           <dt>가맹비<small>브랜드 지적재산권 사용 및 상표 사용</small></dt>
           <dd><s>300만원</s><b>면제</b></dd>
         </div>
         <div class="fee">
+          <i class="ph ph-graduation-cap" aria-hidden="true"></i>
           <dt>교육비<small>영업교육, 레시피교육, 운영메뉴얼, 최적화셋팅</small></dt>
           <dd><s>200만원</s><b>50% 할인</b></dd>
         </div>
         <div class="fee">
+          <i class="ph ph-percent" aria-hidden="true"></i>
           <dt>로열티<small>조리 및 메뉴얼 영업 노하우 사용</small></dt>
           <dd><b>면제</b><i>20호점까지</i></dd>
         </div>
         <div class="fee">
+          <i class="ph ph-printer" aria-hidden="true"></i>
           <dt>인쇄물<small>브랜드 시안물 / 포스터 / 배너 등등</small></dt>
           <dd><b>직접 가능</b></dd>
         </div>
         <div class="fee">
+          <i class="ph ph-paint-roller" aria-hidden="true"></i>
           <dt>인테리어비<small>전기, 설비, 목공사, 실내조명, 주방방수 등</small></dt>
           <dd><b>직접시공 가능</b><i>업종변경시</i></dd>
         </div>
         <div class="fee">
+          <i class="ph ph-cooking-pot" aria-hidden="true"></i>
           <dt>주방기기 및 집기<small>튀김기, 냉장고, 주방설비 등</small></dt>
           <dd><b>자체구매 가능</b><i>업종변경시</i></dd>
         </div>
@@ -744,6 +751,6 @@
   <a class="dock-main" href="#contact">창업 상담 신청</a>
 </div>
 
-<script src="assets/js/site.js?v=12" defer></script>
+<script src="assets/js/site.js?v=13" defer></script>
 </body>
 </html>
