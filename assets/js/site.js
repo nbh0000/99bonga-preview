@@ -35,7 +35,7 @@
 
   // 현재 보고 있는 메뉴 표시
   const navLinks = $$(".gnb a");
-  const groups = { brand: ["brand", "variety", "reviews", "values"], edge: ["edge", "topping", "easy", "logistics", "ages"], benefit: ["benefit", "margin", "support", "marketing", "process"], cost: ["cost"], menu: ["menu"] };
+  const groups = { brand: ["brand", "variety", "reviews", "values"], edge: ["edge", "topping", "easy", "logistics", "ages"], margin: ["margin", "support", "marketing", "process"], cost: ["cost"], menu: ["menu"] };
   const toGroup = {};
   Object.entries(groups).forEach(([g, ids]) => ids.forEach((id) => (toGroup[id] = g)));
   const secObs = new IntersectionObserver((entries) => {
@@ -255,7 +255,6 @@
     [".logi-tag", "right", 0, .7, .2], [".logi-title", "right", 0, 1, .2], [".logi-key", "flip", .5, .7, .2], [".logi-body", "flip", 1, .7, .2],
     [".ages-pill", "up", 0, .7], [".ages-title", "right", .2, .7], [".ages-big", "jack", .5, .7],
     [".ages-list li", "up", 1, .7, .1],
-    [".benefit-lead", "right", 0, .7], [".benefit-title", "jack", .2, .7], [".benefit-stamp", "bounce", .6, 1], [".benefit-note", "left", .4, .7], [".benefit-head .btn", "up", .6, .7], [".fee", "up", .2, .6, .08],
     [".cost .ages-lead", "right", 0, .7], [".cost .sec-title", "left", 0, .7], [".cost .sec-desc", "up", .3, .7],
     [".cost-photo", "left", .2, .7], [".cost-bars", "up", .4, .7], [".cost-table-wrap", "right", .2, .8],
     [".margin .sec-head", "jack", .5, .7], [".pl:not(.is-top)", "up", 1, 1], [".pl.is-top", "up", 1, .7],
