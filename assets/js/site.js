@@ -242,7 +242,7 @@
     [".stats-grid li", "jack", .2, .7, .12],
     [".fresh-photo", "left", 0, .7], [".fresh-point > div", "right", .2, .7, .2], [".fp-meat", "bounce", .4, 1, .3],
     [".variety .sec-title", "right", .2, .7], [".variety .sec-desc", "left", .2, .7],
-    [".vr-a", "jack", .5, .7], [".vr-b", "jack", 1, .7], [".variety-close", "left", .5, .7],
+    [".vr-a", "jack", .4, .7], [".vr-b", "jack", .7, .7], [".vr-c", "jack", 1, .7], [".vr-d", "jack", 1.3, .7], [".variety-close", "left", .5, .7],
     [".sis .sec-title", "right", 0, .7], [".sis .sec-desc", "left", 0, .7], [".sis .pop", "jack", .5, .7],
     [".sis-col:not(.is-ours)", "up", .6, .7], [".sis-vs", "bounce", .9, 1], [".sis-col.is-ours", "up", 1, .7],
     [".topping .sec-title", "right", 0, .7], [".topping .sec-desc", "left", 0, .7], [".topping-row", "up", .3, .9],
