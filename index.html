@@ -18,7 +18,7 @@
 <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/hero.webp" imagesrcset="assets/img/hero-sm.webp 1000w, assets/img/hero.webp 2400w" imagesizes="100vw">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
-<link rel="stylesheet" href="assets/css/site.css?v=19">
+<link rel="stylesheet" href="assets/css/site.css?v=22">
 </head>
 <body>
 <a class="skip" href="#main">본문 바로가기</a>
@@ -352,7 +352,7 @@
           <div class="cost-bars" role="img" aria-label="최종 합계: 타 프랜차이즈 약 1억 7,000만원, 99육회본가 약 4,800만원">
             <div class="cb"><span class="cb-label">타 프랜차이즈</span><span class="cb-track"><i style="--w:100%"></i></span><b>약 1억 7,000만원</b></div>
             <div class="cb is-ours"><span class="cb-label">99육회본가</span><span class="cb-track"><i style="--w:28.2%"></i></span><b>약 4,800만원</b></div>
-            <p class="cb-save"><span data-count="71.7" data-dec="1">71.7</span>% 절감</p>
+            <p class="cb-save"><span class="cb-save-l">총 비용</span><strong><span data-count="71.7" data-dec="1">71.7</span>% 절감</strong></p>
           </div>
         </div>
         <div class="cost-table-wrap">
@@ -462,6 +462,7 @@
       <div class="menu-tabs" role="tablist" aria-label="메뉴 분류">
         <button type="button" role="tab" id="tab-yukhoe" aria-selected="true" aria-controls="mp-yukhoe">육회</button>
         <button type="button" role="tab" id="tab-bowl" aria-selected="false" aria-controls="mp-bowl" tabindex="-1">비빔밥</button>
+        <button type="button" role="tab" id="tab-noodle" aria-selected="false" aria-controls="mp-noodle" tabindex="-1">면요리</button>
       </div>
       <div class="menu-panel" id="mp-yukhoe" role="tabpanel" aria-labelledby="tab-yukhoe">
         <ul class="menu-sig">
@@ -497,6 +498,22 @@
           <li><img src="assets/img/b-yukhoe-cockle.webp" width="760" height="574" loading="lazy" alt=""><p><strong>육회 꼬막 비빔밥</strong><span lang="en">Yukhoe Cockle</span></p></li>
           <li><img src="assets/img/b-crab.webp" width="760" height="574" loading="lazy" alt=""><p><strong>게살 스시 비빔밥</strong><span lang="en">Crab Meat Sushi</span></p></li>
           <li><img src="assets/img/b-bulgogi-jeyuk.webp" width="760" height="574" loading="lazy" alt=""><p><strong>연탄 / 제육 비빔밥</strong><span lang="en">Bulgogi Jeyuk</span></p></li>
+        </ul></div>
+      </div>
+      <div class="menu-panel" id="mp-noodle" role="tabpanel" aria-labelledby="tab-noodle" hidden>
+        <ul class="menu-sig">
+          <li><img src="assets/img/n-sig-mulhoe.webp" width="760" height="517" loading="lazy" alt=""><p><em>시그니처</em><strong>시원한 육회 물회</strong><span lang="en">Beef Sashimi Cold Broth</span></p></li>
+          <li><img src="assets/img/n-sig-mukbap.webp" width="760" height="460" loading="lazy" alt=""><p><em>시그니처</em><strong>시원한 냉묵사발</strong><span lang="en">Acorn Jelly Cold Noodles</span></p></li>
+        </ul>
+        <div class="menu-wrap"><ul class="menu-grid">
+          <li><img src="assets/img/n-mul-naeng.webp" width="760" height="523" loading="lazy" alt=""><p><strong>육회물냉면</strong><span lang="en">Yukhoe Mul Naengmyeon</span></p></li>
+          <li><img src="assets/img/n-mul-mak.webp" width="760" height="526" loading="lazy" alt=""><p><strong>육회물막국수</strong><span lang="en">Yukhoe Mul Makguksu</span></p></li>
+          <li><img src="assets/img/n-bibim-naeng.webp" width="760" height="522" loading="lazy" alt=""><p><strong>육회비빔냉면</strong><span lang="en">Yukhoe Bibim Naengmyeon</span></p></li>
+          <li><img src="assets/img/n-bibim-mak.webp" width="760" height="529" loading="lazy" alt=""><p><strong>육회비빔막국수</strong><span lang="en">Yukhoe Bibim Makguksu</span></p></li>
+          <li><img src="assets/img/n-mul-jjol.webp" width="760" height="523" loading="lazy" alt=""><p><strong>육회물쫄면</strong><span lang="en">Yukhoe Naeng Jjolmyeon</span></p></li>
+          <li><img src="assets/img/n-pasta.webp" width="760" height="522" loading="lazy" alt=""><p><strong>육회냉파스타</strong><span lang="en">Yukhoe Cold Pasta</span></p></li>
+          <li><img src="assets/img/n-bibim-jjol.webp" width="760" height="524" loading="lazy" alt=""><p><strong>육회비빔쫄면</strong><span lang="en">Yukhoe Bibim Jjolmyeon</span></p></li>
+          <li><img src="assets/img/n-pasta-roe.webp" width="760" height="524" loading="lazy" alt=""><p><strong>육회명란냉파스타</strong><span lang="en">Yukhoe Pollack Roe Cold Pasta</span></p></li>
         </ul></div>
       </div>
     </div>
