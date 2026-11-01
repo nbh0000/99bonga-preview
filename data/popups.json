@@ -1,0 +1,22 @@
+{
+  "popups": [
+    {
+      "id": "p1",
+      "type": "youtube",
+      "on": true,
+      "title": "99육회본가 브랜드 영상",
+      "sub": "누르면 유튜브 영상으로 바로 이동합니다",
+      "url": "https://www.youtube.com/",
+      "image": "assets/img/hero-sm.webp"
+    },
+    {
+      "id": "p2",
+      "type": "open",
+      "on": true,
+      "title": "OO점 오픈 완료",
+      "sub": "2026년 11월 그랜드 오픈",
+      "url": "",
+      "image": "assets/img/storefront.webp"
+    }
+  ]
+}

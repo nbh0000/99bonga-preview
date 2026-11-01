@@ -18,7 +18,7 @@
 <link rel="preload" href="assets/fonts/Anton-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/hero.webp" imagesrcset="assets/img/hero-sm.webp 1000w, assets/img/hero.webp 2400w" imagesizes="100vw">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css">
-<link rel="stylesheet" href="assets/css/site.css?v=25">
+<link rel="stylesheet" href="assets/css/site.css?v=26">
 </head>
 <body>
 <a class="skip" href="#main">본문 바로가기</a>
@@ -574,7 +574,7 @@
             <input type="checkbox" name="agree" value="1" required>
             <span>개인정보 수집 및 이용에 동의합니다.</span>
           </label>
-          <details class="privacy">
+          <details class="privacy" id="privacy">
             <summary>개인정보 수집 및 이용 동의 전문 보기</summary>
             <div class="privacy-body">
 <p>회사명(이하 ‘회사’라 한다)는 개인정보 보호법 제30조에 따라 정보 주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 하기 위하여 다음과 같이 개인정보 처리지침을 수립, 공개합니다.</p>
@@ -727,11 +727,34 @@
 
 <a class="to-top" href="#top" data-to-top><span class="sr">맨 위로</span><i class="ph ph-arrow-up" aria-hidden="true"></i></a>
 
-<div class="dock" data-dock>
-  <a href="tel:18006073"><i class="ph ph-phone" aria-hidden="true"></i>1800-6073</a>
-  <a class="dock-main" href="#contact">창업 상담 신청</a>
+<div class="pop" data-pop hidden>
+  <div class="pop-dim" data-pop-close></div>
+  <div class="pop-track" role="dialog" aria-modal="true" aria-label="알림" data-pop-track></div>
+  <div class="pop-dots" aria-hidden="true" data-pop-dots></div>
 </div>
 
-<script src="assets/js/site.js?v=15" defer></script>
+<aside class="qbar" data-qbar aria-label="빠른 창업문의">
+  <button class="qbar-fold" type="button" aria-expanded="true" aria-controls="qbar-body" data-qbar-fold><span>접기</span><i class="ph ph-caret-down" aria-hidden="true"></i></button>
+  <div class="qbar-mini">
+    <a href="tel:18006073"><i class="ph ph-phone" aria-hidden="true"></i>1800-6073</a>
+    <button class="qbar-open" type="button" data-qbar-open>창업 상담 신청</button>
+  </div>
+  <form class="qbar-body" id="qbar-body" action="api/inquiry.php" method="post" novalidate data-form data-quick>
+    <p class="qbar-tel"><span>창업문의</span><a href="tel:18006073">1800-6073</a></p>
+    <label class="sr" for="q-name">성함</label>
+    <input id="q-name" name="name" type="text" autocomplete="name" required maxlength="40" placeholder="성함">
+    <label class="sr" for="q-phone">연락처</label>
+    <input id="q-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required maxlength="20" placeholder="연락처">
+    <label class="sr" for="q-region">희망 창업 지역</label>
+    <input id="q-region" name="region" type="text" maxlength="60" placeholder="희망 창업 지역">
+    <label class="check qbar-agree"><input type="checkbox" name="agree" value="1" required><span><a href="#privacy" data-privacy>개인정보 수집 및 이용</a>에 동의합니다.</span></label>
+    <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <input type="hidden" name="source" value="quick">
+    <button class="btn btn-primary btn-submit" type="submit">창업문의</button>
+    <p class="form-msg qbar-msg" role="status" aria-live="polite" data-form-msg></p>
+  </form>
+</aside>
+
+<script src="assets/js/site.js?v=16" defer></script>
 </body>
 </html>

@@ -533,7 +533,6 @@ section { position: relative; padding-block: var(--sec-y); }
 .copy { margin-left: auto; }
 
 /* 하단 고정 바 (모바일) */
-.dock { display: none; }
 
 /* 태블릿 */
 @media (max-width: 1023px) {
@@ -629,11 +628,6 @@ section { position: relative; padding-block: var(--sec-y); }
   .contact-logo { grid-row: auto; width: 96px; margin-bottom: 16px; }
   .copy { margin-left: 0; width: 100%; }
 
-  .dock { display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 10px max(12px, env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-right)); background: rgb(22 20 19 / 0.94); border-top: 1px solid var(--line); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); transition: transform .35s var(--ease-out); }
-  .dock a { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 48px; border-radius: 6px; font-weight: 700; border: 1px solid rgb(236 228 218 / 0.3); }
-  .dock .dock-main { background: var(--tan); border-color: var(--tan); color: #1b1611; }
-  .dock a:active { transform: scale(0.98); }
-  .dock.is-hidden, .dock.is-typing { transform: translateY(110%); }
   .site-foot { padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
 }
 
@@ -647,7 +641,7 @@ section { position: relative; padding-block: var(--sec-y); }
   .hero { min-height: 100svh; }
   .hero-en { font-size: 1.7rem; }
   .hero-body { padding-bottom: 28px; }
-  .dock { display: none; }
+  .qbar { display: none; }
 }
 
 /* 큰 화면 */
@@ -739,3 +733,101 @@ body { overflow-x: clip; }
   .reviews-track img { transition: transform .5s var(--ease-out); }
   .reviews-track li:hover img { transform: translateY(-8px); }
 }
+
+/* 빠른 창업문의 바: 스크롤 내내 하단 고정, 접기 가능 */
+.qbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding: 12px max(var(--gutter), env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(var(--gutter), env(safe-area-inset-left)); background: rgb(18 16 15 / 0.95); border-top: 1px solid rgb(203 171 132 / 0.35); box-shadow: 0 -16px 40px -20px rgb(0 0 0 / 0.8); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); transition: transform .4s var(--ease-out); }
+.qbar.is-hidden, .qbar.is-typing { transform: translateY(calc(100% + 40px)); }
+.qbar-fold { position: absolute; left: 50%; bottom: 100%; translate: -50% 0; display: flex; align-items: center; gap: 4px; padding: 5px 14px 4px; border-radius: 8px 8px 0 0; background: rgb(18 16 15 / 0.95); border: 1px solid rgb(203 171 132 / 0.35); border-bottom: 0; color: var(--text); font: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.qbar-fold i { transition: transform .3s var(--ease-out); }
+.qbar.is-folded .qbar-fold i { transform: rotate(180deg); }
+.qbar-body { display: grid; grid-template-columns: auto minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr) auto auto; align-items: center; gap: 10px; max-width: 1240px; margin-inline: auto; }
+.qbar-tel { display: grid; line-height: 1.15; padding-right: 8px; }
+.qbar-tel span { font-size: 0.78rem; color: var(--tan); font-weight: 700; }
+.qbar-tel a { font-family: var(--display); font-size: 1.25rem; letter-spacing: -0.01em; }
+.qbar-body input[type="text"], .qbar-body input[type="tel"] { width: 100%; min-height: 46px; padding: 0 14px; border-radius: 6px; border: 1px solid rgb(236 228 218 / 0.2); background: #f3eee7; color: #1f1b18; font: inherit; font-size: 16px; }
+.qbar-body input::placeholder { color: #8a8077; }
+.qbar-body input:focus { outline: none; border-color: var(--tan); box-shadow: 0 0 0 3px rgb(203 171 132 / 0.35); }
+.qbar-body input[aria-invalid="true"] { border-color: #e2705c; box-shadow: 0 0 0 2px rgb(226 112 92 / 0.45); }
+.qbar-agree { font-size: 0.86rem; font-weight: 500; white-space: nowrap; }
+.qbar-agree a { color: var(--tan); text-decoration: underline; text-underline-offset: 3px; }
+.qbar-agree.is-bad { color: #f08a76; }
+.qbar .btn-submit { min-width: 0; min-height: 46px; padding-inline: 26px; }
+.qbar-msg { grid-column: 1 / -1; font-size: 0.88rem; }
+.qbar-msg:empty { display: none; }
+.qbar-mini { display: none; }
+.qbar.is-folded { padding-block: 0 env(safe-area-inset-bottom); }
+.qbar.is-folded .qbar-body { display: none; }
+.to-top { bottom: calc(var(--qbar-h, 0px) + 20px + env(safe-area-inset-bottom)); transition: opacity .3s, transform .3s var(--ease-out), background-color .2s, bottom .4s var(--ease-out); }
+.site-foot { padding-bottom: calc(var(--qbar-h, 0px) + 32px); }
+@media (max-width: 1100px) {
+  .qbar-tel { display: none; }
+  .qbar-body { grid-template-columns: repeat(3, minmax(0, 1fr)) auto; }
+  .qbar-agree { grid-column: 1 / 4; grid-row: 2; }
+  .qbar .btn-submit { grid-column: 4; grid-row: 1 / 3; align-self: stretch; }
+}
+@media (max-width: 767px) {
+  .qbar { padding-top: 14px; }
+  .qbar-body { grid-template-columns: 1fr; gap: 8px; }
+  .qbar-agree, .qbar .btn-submit { grid-column: auto; grid-row: auto; }
+  .qbar-agree { white-space: normal; padding-block: 2px; }
+  .qbar .btn-submit { min-height: 50px; }
+  .qbar.is-folded { padding: 10px max(12px, env(safe-area-inset-left)) calc(10px + env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-right)); }
+  .qbar.is-folded .qbar-mini { display: grid; grid-template-columns: 1fr 1.3fr; gap: 8px; }
+  .qbar.is-folded .qbar-fold { display: none; }
+  .qbar-mini a, .qbar-mini button { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 48px; border-radius: 6px; font: inherit; font-weight: 700; border: 1px solid rgb(236 228 218 / 0.3); color: var(--text); background: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+  .qbar-mini .qbar-open { background: var(--tan); border-color: var(--tan); color: #1b1611; }
+  .qbar-mini a:active, .qbar-mini button:active, .qbar .btn-submit:active { transform: scale(0.98); }
+}
+@media (max-height: 500px) and (orientation: landscape) { .qbar { display: none; } }
+@media (hover: hover) and (pointer: fine) {
+  .qbar-fold:hover { color: var(--tan); }
+  .qbar-agree a:hover { color: #e2c9a6; }
+}
+@media (prefers-reduced-motion: reduce) { .qbar, .qbar-fold i { transition: none; } }
+
+/* 팝업 (유튜브 영상 · 매장 오픈 소식) */
+.pop { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; align-content: center; gap: 14px; padding: calc(20px + env(safe-area-inset-top)) 20px calc(20px + env(safe-area-inset-bottom)); }
+.pop[hidden] { display: none; }
+.pop-dim { position: absolute; inset: 0; background: rgb(10 9 8 / 0.62); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+.pop-track { position: relative; display: flex; gap: 18px; justify-content: center; max-width: 100%; }
+.pop-card { flex: none; width: min(340px, 82vw); display: grid; grid-template-rows: 1fr auto; border-radius: var(--radius); overflow: hidden; background: #1f1b18; box-shadow: 0 30px 70px -20px rgb(0 0 0 / 0.85); }
+.pop-link { display: grid; grid-template-rows: 1fr auto; color: inherit; }
+.pop-media { position: relative; display: block; min-height: 100%; aspect-ratio: 4 / 5; background: #2a2521; overflow: hidden; }
+.pop-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease-out); }
+.pop-media::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(180deg, transparent, rgb(12 10 9 / 0.88)); }
+.pop-text { position: absolute; left: 0; right: 0; bottom: 0; z-index: 1; display: grid; gap: 4px; padding: 20px; }
+.pop-text strong { font-family: var(--display); font-size: 1.6rem; line-height: 1.2; letter-spacing: -0.02em; color: #fff; }
+.pop-text span { font-size: 0.92rem; color: #e2d6c6; }
+.pop-play { position: absolute; left: 50%; top: 42%; z-index: 1; translate: -50% -50%; display: grid; place-items: center; width: 72px; height: 72px; border-radius: 50%; background: rgb(18 16 15 / 0.6); border: 1.5px solid rgb(255 255 255 / 0.85); color: #fff; font-size: 30px; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); transition: background-color .25s, border-color .25s, transform .3s var(--ease-out); }
+.pop-play i { translate: 2px 0; }
+.pop-cta { display: flex; align-items: center; justify-content: center; gap: 6px; min-height: 48px; background: var(--tan); color: #1b1611; font-weight: 700; }
+.pop-cta i { font-size: 20px; }
+.pop-foot { display: grid; grid-template-columns: 1fr auto; border-top: 1px solid rgb(236 228 218 / 0.1); }
+.pop-foot button { min-height: 46px; padding: 0 16px; background: none; border: 0; color: #b9ada0; font: inherit; font-size: 0.88rem; cursor: pointer; text-align: left; touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.pop-foot button + button { border-left: 1px solid rgb(236 228 218 / 0.1); color: var(--text); font-weight: 600; text-align: center; min-width: 76px; }
+.pop-foot button:active { opacity: 0.7; }
+.pop-link:active .pop-play { transform: scale(0.94); }
+.pop-dots { position: relative; display: flex; gap: 6px; }
+.pop-dots:empty { display: none; }
+.pop-dots i { width: 6px; height: 6px; border-radius: 3px; background: rgb(255 255 255 / 0.35); transition: width .3s var(--ease-out), background-color .3s; }
+.pop-dots i.is-on { width: 18px; background: var(--tan); }
+@media (min-width: 768px) { .pop-dots { display: none; } }
+@media (max-width: 767px) {
+  .pop-track { justify-content: flex-start; width: 100%; max-width: 360px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 12px; }
+  .pop-track::-webkit-scrollbar { display: none; }
+  .pop-card { width: 100%; scroll-snap-align: center; }
+  .pop-media { aspect-ratio: 1 / 1.1; }
+}
+@media (max-height: 640px) { .pop-media { aspect-ratio: 16 / 11; } }
+@media (hover: hover) and (pointer: fine) {
+  .pop-link:hover img { transform: scale(1.04); }
+  .pop-link:hover .pop-play { background: #c4302b; border-color: #c4302b; }
+  .pop-foot button:hover { color: var(--tan); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pop:not([hidden]) .pop-dim { animation: popFade .3s ease both; }
+  .pop:not([hidden]) .pop-card { animation: popIn .5s var(--ease-out) both; }
+  .pop:not([hidden]) .pop-card:nth-child(2) { animation-delay: .08s; }
+}
+@keyframes popFade { from { opacity: 0; } }
+@keyframes popIn { from { opacity: 0; transform: translateY(18px) scale(0.98); } }

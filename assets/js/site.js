@@ -162,34 +162,103 @@
     });
   });
 
-  // 하단 고정 바: 상담 영역·푸터가 보이면 숨김
-  const dock = $("[data-dock]");
-  if (dock) {
+  // 팝업: 관리자에서 등록한 data/popups.json (유튜브 영상 · 매장 오픈 소식)
+  const pop = $("[data-pop]");
+  if (pop) {
+    const today = new Date().toISOString().slice(0, 10);
+    const hiddenToday = (id) => { try { return localStorage.getItem("pop-" + id) === today; } catch { return false; } };
+    const ytId = (u) => (u.match(/(?:youtu\.be\/|[?&]v=|\/(?:embed|shorts|live)\/)([\w-]{11})/) || [])[1];
+    const esc = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+    const safeUrl = (u) => /^https?:\/\//i.test(u || "") ? u : "";
+    fetch("data/popups.json", { cache: "no-store" }).then((r) => r.json()).then(({ popups = [] }) => {
+      const list = popups.filter((p) => p.on && !hiddenToday(p.id));
+      if (!list.length) return;
+      const track = $("[data-pop-track]", pop);
+      const dots = $("[data-pop-dots]", pop);
+      track.innerHTML = list.map((p) => {
+        const yt = p.type === "youtube";
+        const id = yt ? ytId(p.url || "") : null;
+        const img = p.image || (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : "");
+        const url = safeUrl(p.url);
+        const media = `<span class="pop-media${yt ? " is-yt" : ""}">${img ? `<img src="${esc(img)}" alt="" loading="lazy">` : ""}${yt ? '<span class="pop-play"><i class="ph ph-play" aria-hidden="true"></i></span>' : ""}<span class="pop-text"><strong>${esc(p.title)}</strong>${p.sub ? `<span>${esc(p.sub)}</span>` : ""}</span></span>`;
+        const body = url ? `<a class="pop-link" href="${esc(url)}" target="_blank" rel="noopener">${media}${yt ? '<span class="pop-cta"><i class="ph ph-youtube-logo" aria-hidden="true"></i>유튜브에서 보기</span>' : ""}</a>` : media;
+        return `<article class="pop-card" data-id="${esc(p.id)}">${body}<div class="pop-foot"><button type="button" data-pop-today>오늘 하루 보지 않기</button><button type="button" data-pop-x>닫기</button></div></article>`;
+      }).join("");
+      dots.innerHTML = list.length > 1 ? list.map(() => "<i></i>").join("") : "";
+      const last = document.activeElement;
+      const onKey = (e) => { if (e.key === "Escape") close(); };
+      const close = () => { pop.hidden = true; document.removeEventListener("keydown", onKey); last?.focus?.({ preventScroll: true }); };
+      const closeCard = (card, save) => {
+        if (save) try { localStorage.setItem("pop-" + card.dataset.id, today); } catch {}
+        card.remove();
+        dots.lastElementChild?.remove();
+        if (!$(".pop-card", track)) close();
+      };
+      track.addEventListener("click", (e) => {
+        const card = e.target.closest(".pop-card");
+        if (e.target.closest("[data-pop-today]")) closeCard(card, true);
+        else if (e.target.closest("[data-pop-x]")) closeCard(card, false);
+      });
+      $("[data-pop-close]", pop).addEventListener("click", close);
+      // 휴대폰에서 좌우로 넘길 때 현재 위치 표시
+      track.addEventListener("scroll", () => {
+        const i = Math.round(track.scrollLeft / (track.firstElementChild?.offsetWidth || 1));
+        $$("i", dots).forEach((d, n) => d.classList.toggle("is-on", n === i));
+      }, { passive: true });
+      dots.firstElementChild?.classList.add("is-on");
+      document.addEventListener("keydown", onKey);
+      setTimeout(() => { pop.hidden = false; $(".pop-card a, .pop-card button", track)?.focus({ preventScroll: true }); }, 600);
+    }).catch(() => {});
+  }
+
+  // 빠른 창업문의 바: 스크롤 내내 하단에 고정, 첫 화면·상담 영역·푸터가 보이면 숨김, 접은 상태 기억
+  const qbar = $("[data-qbar]");
+  if (qbar) {
+    const fold = $("[data-qbar-fold]", qbar);
+    const root = document.documentElement;
+    const setH = () => root.style.setProperty("--qbar-h", qbar.classList.contains("is-hidden") ? "0px" : qbar.offsetHeight + "px");
+    const setFold = (on, save) => {
+      qbar.classList.toggle("is-folded", on);
+      fold.setAttribute("aria-expanded", String(!on));
+      fold.firstElementChild.textContent = on ? "펼치기" : "접기";
+      if (save) try { localStorage.setItem("qbarFolded", on ? "1" : "0"); } catch {}
+      setH();
+    };
+    let saved = null;
+    try { saved = localStorage.getItem("qbarFolded"); } catch {}
+    setFold(saved === "1", false);
+    fold.addEventListener("click", () => setFold(!qbar.classList.contains("is-folded"), true));
+    $("[data-qbar-open]", qbar).addEventListener("click", () => { setFold(false, true); $("#q-name").focus(); });
+    $("[data-privacy]", qbar).addEventListener("click", () => { const d = $("#privacy"); if (d) d.open = true; });
     const seen = new Set();
     const obs = new IntersectionObserver((entries) => {
       entries.forEach((e) => (e.isIntersecting ? seen.add(e.target) : seen.delete(e.target)));
-      dock.classList.toggle("is-hidden", seen.size > 0);
+      qbar.classList.toggle("is-hidden", seen.size > 0);
+      setH();
     });
     [$("#contact"), $(".site-foot"), hero].forEach((el) => el && obs.observe(el));
-    addEventListener("focusin", (e) => { if (e.target.matches("input, textarea, select")) dock.classList.add("is-typing"); });
-    addEventListener("focusout", () => dock.classList.remove("is-typing"));
+    new ResizeObserver(setH).observe(qbar);
+    // 본문 입력칸을 쓰는 동안에는 바가 가리지 않게 내림
+    addEventListener("focusin", (e) => { if (e.target.matches("input, textarea, select") && !qbar.contains(e.target)) qbar.classList.add("is-typing"); });
+    addEventListener("focusout", () => qbar.classList.remove("is-typing"));
   }
 
-  // 상담 신청 폼
-  const form = $("[data-form]");
-  if (form) {
+  // 상담 신청 폼 (본문 폼 · 하단 빠른 문의 바 공통)
+  $$("[data-form]").forEach((form) => {
     const msg = $("[data-form-msg]", form);
     const btn = $(".btn-submit", form);
+    const label = btn.textContent;
     const setErr = (name, on) => {
       const input = form.elements[name];
       const err = $("#e-" + name, form);
       if (input && input.type !== "checkbox") input.setAttribute("aria-invalid", on ? "true" : "false");
-      if (input) input.setAttribute("aria-describedby", on ? "e-" + name : "");
+      if (input && input.type === "checkbox") input.closest("label")?.classList.toggle("is-bad", on);
+      if (input && err) input.setAttribute("aria-describedby", on ? "e-" + name : "");
       if (err) err.hidden = !on;
     };
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      msg.textContent = ""; msg.className = "form-msg";
+      msg.textContent = ""; msg.className = msg.className.replace(/ ?is-(ok|err)/g, "");
       const name = form.elements.name.value.trim();
       const phone = form.elements.phone.value.replace(/[^0-9]/g, "");
       const agree = form.elements.agree.checked;
@@ -197,7 +266,11 @@
       setErr("phone", phone.length < 9);
       setErr("agree", !agree);
       const firstBad = (!name && form.elements.name) || (phone.length < 9 && form.elements.phone) || (!agree && form.elements.agree);
-      if (firstBad) { firstBad.focus(); return; }
+      if (firstBad) {
+        if (!err0(form)) msg.textContent = !name ? "성함을 입력해 주세요." : phone.length < 9 ? "연락처를 숫자로 입력해 주세요." : "개인정보 수집 및 이용에 동의해 주세요.";
+        if (msg.textContent) msg.classList.add("is-err");
+        firstBad.focus(); return;
+      }
 
       btn.disabled = true; btn.textContent = "보내는 중";
       try {
@@ -211,10 +284,12 @@
         msg.textContent = "접수되지 않았습니다. 잠시 후 다시 시도하거나 1800-6073으로 전화 주세요.";
         msg.classList.add("is-err");
       } finally {
-        btn.disabled = false; btn.textContent = "문의하기";
+        btn.disabled = false; btn.textContent = label;
       }
     });
-  }
+  });
+  // 본문 폼은 칸마다 안내 문구가 있어 아래 메시지를 따로 쓰지 않음
+  function err0(form) { return !!$(".field-err", form); }
 
   // 스크롤 진행 표시 · 맨 위로 버튼 · 첫 화면 사진 느린 이동
   const sbar = $("[data-scroll-bar]");
