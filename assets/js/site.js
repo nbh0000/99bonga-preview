@@ -181,7 +181,9 @@
         const img = p.image || (id ? `https://i.ytimg.com/vi/${id}/hqdefault.jpg` : "");
         const url = safeUrl(p.url);
         const media = `<span class="pop-media${yt ? " is-yt" : ""}">${img ? `<img src="${esc(img)}" alt="" loading="lazy">` : ""}${yt ? '<span class="pop-play"><i class="ph ph-play" aria-hidden="true"></i></span>' : ""}<span class="pop-text"><strong>${esc(p.title)}</strong>${p.sub ? `<span>${esc(p.sub)}</span>` : ""}</span></span>`;
-        const body = url ? `<a class="pop-link" href="${esc(url)}" target="_blank" rel="noopener">${media}${yt ? '<span class="pop-cta"><i class="ph ph-youtube-logo" aria-hidden="true"></i>유튜브에서 보기</span>' : ""}</a>` : media;
+        // 휴대폰(특히 카카오톡 등 앱 안 브라우저)은 새 창 열기를 막는 경우가 많아 같은 창에서 이동 → 유튜브 앱이 받아 엶
+        const tgt = matchMedia("(pointer: fine)").matches ? ' target="_blank" rel="noopener"' : "";
+        const body = url ? `<a class="pop-link" href="${esc(url)}"${tgt}>${media}${yt ? '<span class="pop-cta"><i class="ph ph-youtube-logo" aria-hidden="true"></i>유튜브에서 보기</span>' : ""}</a>` : media;
         return `<article class="pop-card" data-id="${esc(p.id)}">${body}<div class="pop-foot"><button type="button" data-pop-today>오늘 하루 보지 않기</button><button type="button" data-pop-x>닫기</button></div></article>`;
       }).join("");
       dots.innerHTML = list.length > 1 ? list.map(() => "<i></i>").join("") : "";
