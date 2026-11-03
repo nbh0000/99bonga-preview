@@ -162,6 +162,13 @@
     });
   });
 
+  // 접속 집계(카페24 서버에서만): 관리자 첫 화면의 일일 방문자 숫자
+  if (!/github\.io$|^127\.|^localhost$/.test(location.hostname) || /[?&]stats=1/.test(location.search)) {
+    const fd = new FormData();
+    fd.append("ref", document.referrer);
+    try { navigator.sendBeacon("api/visit.php", fd); } catch {}
+  }
+
   // 팝업: 관리자에서 등록한 data/popups.json (유튜브 영상 · 매장 오픈 소식)
   const pop = $("[data-pop]");
   if (pop) {
